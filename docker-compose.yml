@@ -1,0 +1,9 @@
+version: '3.7'
+
+services:
+  msglite-backend:
+    build: .
+    volumes:
+      - .:/usr/src/app
+    ports:
+      - 443:80
