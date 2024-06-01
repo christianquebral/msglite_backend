@@ -1,7 +1,8 @@
-from decouple import config
+#from decouple import config
 from flask import Flask
 from flask_cors import CORS
 from flask_restful import Api, Resource
+from session import Session
 
 import markdown
 import os
@@ -18,11 +19,14 @@ def index():
         content = readme.read()
         return markdown.markdown(content)
 
+api.add_resource(Session, "/session")
 
-if config("ENV") == "PROD":
-    ctx = ssl.SSLContext(ssl.PROTOCOL_SSLv23)
-    ctx.load_cert_chain("./cert/fullchain.pem", "./cert/privkey.pem")
-    app.run(host="0.0.0.0", port=80, debug=False, ssl_context=ctx)
+app.run(host="0.0.0.0", port=80, debug=True)
 
-else:
-    app.run(host="0.0.0.0", port=80, debug=True)
+# if config("ENV") == "PROD":
+#     ctx = ssl.SSLContext(ssl.PROTOCOL_SSLv23)
+#     ctx.load_cert_chain("./cert/fullchain.pem", "./cert/privkey.pem")
+#     app.run(host="0.0.0.0", port=80, debug=False, ssl_context=ctx)
+
+# else:
+#     app.run(host="0.0.0.0", port=80, debug=True)
